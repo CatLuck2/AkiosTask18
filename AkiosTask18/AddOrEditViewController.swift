@@ -8,17 +8,17 @@
 
 import UIKit
 
-enum SegueMode {
-    case add
-    case edit
-}
-
 final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
+    
+    enum SegueMode {
+        case add
+        case edit
+    }
     
     @IBOutlet private weak var completeInputButton: UIBarButtonItem!
     @IBOutlet private weak var inputNameTextField : UITextField!
     
-    var mode                : SegueMode!
+    var mode                : SegueMode = .add
     var selectedIndexPathRow: Int!
     var inputText           : String!
     
@@ -39,7 +39,6 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
             self.navigationItem.title = "項目編集"
             completeInputButton.title = "更新"
             inputNameTextField.text   = inputText
-        case .none: break
         }
     }
     
@@ -71,7 +70,6 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
             } else {
                 displayAlert()
             }
-        case .none: break
         }
     }
     

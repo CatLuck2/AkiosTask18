@@ -13,7 +13,7 @@ private struct CheckItem {
     var check: Bool
 }
 
-private class CheckItemTableViewCell: UITableViewCell {
+class CheckItemTableViewCell: UITableViewCell {
     @IBOutlet fileprivate weak var checkItemImageView: UIImageView!
     @IBOutlet fileprivate weak var checkItemLabel: UILabel!
 }
