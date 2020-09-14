@@ -8,12 +8,17 @@
 
 import UIKit
 
+enum SegueMode {
+    case add
+    case edit
+}
+
 final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet private weak var completeInputButton: UIBarButtonItem!
     @IBOutlet private weak var inputNameTextField : UITextField!
     
-    var segueIdentifier     : String!
+    var mode                : SegueMode!
     var selectedIndexPathRow: Int!
     var inputText           : String!
     
@@ -26,14 +31,15 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if segueIdentifier == "addSegue" {
+        switch mode {
+        case .add:
             self.navigationItem.title = "項目追加"
             completeInputButton.title = "追加"
-        }
-        if segueIdentifier == "editSegue" {
+        case .edit:
             self.navigationItem.title = "項目編集"
             completeInputButton.title = "更新"
             inputNameTextField.text   = inputText
+        case .none: break
         }
     }
     
@@ -49,7 +55,8 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func completeInputButton(_ sender: UIButton) {
-        if segueIdentifier == "addSegue" {
+        switch mode {
+        case .add:
             // 文字が入力されてるかの確認
             if let text = inputNameTextField.text, !text.isEmpty {
                 inputText  = inputNameTextField.text!
@@ -57,14 +64,14 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
             } else {
                 displayAlert()
             }
-        }
-        if segueIdentifier == "editSegue" {
+        case .edit:
             if let text = inputNameTextField.text, !text.isEmpty {
                 inputText  = inputNameTextField.text!
                 performSegue(withIdentifier: "completeEdit", sender: nil)
             } else {
                 displayAlert()
             }
+        case .none: break
         }
     }
     

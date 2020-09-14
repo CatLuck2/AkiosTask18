@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="checklistcell" rowHeight="61" id="zX4-Jl-kAC">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="checklistcell" rowHeight="61" id="zX4-Jl-kAC" customClass="CheckItemTableViewCell" customModule="AkiosTask18" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zX4-Jl-kAC" id="cbd-Wz-JSA">
@@ -49,6 +49,10 @@
                                                 <constraint firstItem="sm1-w1-Omw" firstAttribute="trailing" secondItem="cbd-Wz-JSA" secondAttribute="trailingMargin" id="mKA-mx-ynW"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="checkItemImageView" destination="hqc-uo-Y2o" id="NeV-a1-me2"/>
+                                            <outlet property="checkItemLabel" destination="sm1-w1-Omw" id="HIV-0y-gz0"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
