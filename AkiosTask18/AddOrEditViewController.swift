@@ -15,7 +15,7 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
     
     var segueIdentifier     : String!
     var selectedIndexPathRow: Int!
-    var betaCheckItem       : CheckItem! = CheckItem()
+    var inputText           : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,7 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
         if segueIdentifier == "editSegue" {
             self.navigationItem.title = "項目編集"
             completeInputButton.title = "更新"
-            inputNameTextField.text   = betaCheckItem.name
+            inputNameTextField.text   = inputText
         }
     }
     
@@ -52,8 +52,7 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
         if segueIdentifier == "addSegue" {
             // 文字が入力されてるかの確認
             if let text = inputNameTextField.text, !text.isEmpty {
-                betaCheckItem.name  = inputNameTextField.text!
-                betaCheckItem.check = false
+                inputText  = inputNameTextField.text!
                 performSegue(withIdentifier: "completeAdd", sender: nil)
             } else {
                 displayAlert()
@@ -61,12 +60,10 @@ final class AddOrEditViewController: UIViewController,UITextFieldDelegate {
         }
         if segueIdentifier == "editSegue" {
             if let text = inputNameTextField.text, !text.isEmpty {
-                betaCheckItem.name  = inputNameTextField.text!
-                betaCheckItem.check = false
-                performSegue(withIdentifier: "completeAdd", sender: nil)
-            } else {
-                betaCheckItem.name  = inputNameTextField.text!
+                inputText  = inputNameTextField.text!
                 performSegue(withIdentifier: "completeEdit", sender: nil)
+            } else {
+                displayAlert()
             }
         }
     }

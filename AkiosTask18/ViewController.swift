@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct CheckItem {
+private struct CheckItem {
     var name : String!
     var check: Bool!
 }
@@ -38,21 +38,23 @@ final class ViewController: UIViewController {
             guard let indexPathRow = sender as? Int else { return }
             addOrEditVC.segueIdentifier      = "editSegue"
             addOrEditVC.selectedIndexPathRow = indexPathRow
-            addOrEditVC.betaCheckItem        = checkList[sender as! Int]
+            addOrEditVC.inputText            = checkList[sender as! Int].name
         }
     }
     
     
     @IBAction func unwindToVC(_ unwindSegue: UIStoryboardSegue) {
         if unwindSegue.identifier == "completeAdd" {
-            let addOrEditVC = unwindSegue.source as! AddOrEditViewController
-            checkList.append(addOrEditVC.betaCheckItem)
+            let addOrEditVC   = unwindSegue.source as! AddOrEditViewController
+            let betaCheckItem = CheckItem(name: addOrEditVC.inputText, check: false)
+            checkList.append(betaCheckItem)
             checkListTableView.reloadData()
         }
         if unwindSegue.identifier == "completeEdit" {
             let addOrEditVC          = unwindSegue.source as! AddOrEditViewController
+            let betaCheckItem        = CheckItem(name: addOrEditVC.inputText, check: false)
             let indexPathRow         = addOrEditVC.selectedIndexPathRow
-            checkList[indexPathRow!] = addOrEditVC.betaCheckItem
+            checkList[indexPathRow!] = betaCheckItem
             checkListTableView.reloadData()
         }
     }
@@ -69,7 +71,11 @@ extension ViewController: UITableViewDelegate,UITableViewDataSource {
         guard let itemImageView = cell.viewWithTag(1) as? UIImageView else { return cell }
         guard let itemName      = cell.viewWithTag(2) as? UILabel else { return cell }
         
-        itemImageView.image     = checkList[indexPath.row].check ? UIImage(systemName: "checkmark") : nil
+        if checkList[indexPath.row].check {
+            itemImageView.image = UIImage(systemName: "checkmark")
+        } else {
+            itemImageView.image = nil
+        }
         itemName.text           = checkList[indexPath.row].name
         
         return cell
@@ -77,11 +83,6 @@ extension ViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         checkList[indexPath.row].check.toggle()
-        
-        let cell                = tableView.dequeueReusableCell(withIdentifier: "checklistcell", for: indexPath)
-        guard let itemImageView = cell.viewWithTag(1) as? UIImageView else { return }
-        
-        itemImageView.image = checkList[indexPath.row].check ? UIImage(systemName: "checkmark") : nil
         checkListTableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
